@@ -1,87 +1,60 @@
-/* 
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Date;
-import java.text.DateFormat;
-import java.util.Locale;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Cli {
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in); // Listen to the standard input (console)
-		System.out.print("> "); // Prompt
-		while (true) { // Infinite loop
-			String command = scanner.nextLine(); // Get input from console as a string
-			String output = ""; // A variable named output of type String
-			Date today = new Date();
-			if (command.equals("exit")) {
-				break; // Forces exit of the while loop
-			}
-			if (command.equals("date")) {
-				DateFormat date = DateFormat.getDateInstance(
-					DateFormat.SHORT, new Locale("FR", "fr")
-				);
-				System.out.println(date.format(today));
-			}
-			if (command.equals("time")) {
-				DateFormat time = DateFormat.getTimeInstance(
-					DateFormat.SHORT, new Locale("FR", "fr")
-				);
-				System.out.println(time.format(today));
-			}  
-			if (command.equals("datetime")) {
-				DateFormat dateTime = DateFormat.getDateTimeInstance(
-					DateFormat.SHORT,
-					DateFormat.SHORT, new Locale("FR", "fr")
-				);
-				System.out.println(dateTime.format(today));
-			} 
-			 else {
-				// String concatenation
-				output = "Command " + command + " not found.";
-			}
-			System.out.println(output); // Print with new line (ln)
-			System.out.print("> "); // Prompt
-		}
-		scanner.close(); // Best practice, always close a stream when no more needed
-		System.out.println("Bye!");
-	}
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("> "); // Invite
 
-}*/
-import java.util.Scanner;
-import java.time.LocalDate; // import the LocalDate class
-import java.time.LocalTime; // import the LocalTime class
-import java.time.LocalDateTime; // import the LocalDateTime class
+        while (true) {
+            String command = scanner.nextLine(); // Obtenir l'entrée de la console sous forme de chaîne
+            String output = ""; // Variable pour stocker la sortie
 
-public class Cli {
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in); // Listen to the standard input (console)
-		System.out.print("> "); // Prompt
-		while (true) { // Infinite loop
-			String command = scanner.nextLine(); // Get input from console as a string
-			String output = ""; // A variable named output of type String
-			if (command.equals("exit")) {
-				break; // Forces exit of the while loop
-			}
-			if (command.equals("date")) {
-				LocalDate today = LocalDate.now();
-				System.out.println(today);
-			}
-			if (command.equals("time")) {
-				LocalTime today = LocalTime.now();
-				System.out.println(today);
-			}  
-			if (command.equals("datetime")) {
-				LocalDateTime today = LocalDateTime.now();
-				System.out.println(today);
-			}
-			 else {
-				// String concatenation
-				output = "Command " + command + " not found.";
-			}
-			System.out.println(output); // Print with new line (ln)
-			System.out.print("> "); // Prompt
-		}
-		scanner.close(); // Best practice, always close a stream when no more needed
-		System.out.println("Bye!");
-	}
+            if (command.equals("exit")) {
+                break; // Quitter la boucle si la commande est "exit"
+            } else if (command.equals("date")) {
+                LocalDate today = LocalDate.now();
+                output = today.toString();
+            } else if (command.equals("time")) {
+                LocalTime now = LocalTime.now();
+                output = now.toString();
+            } else if (command.equals("datetime")) {
+                LocalDateTime now = LocalDateTime.now();
+                output = now.toString();
+            } else if (command.equals("userhome")) {
+                String userhome = System.getProperty("user.home");
+                output = "Le répertoire de l'utilisateur est : " + userhome;
+            } else if (command.equals("os")) {
+                String os = System.getProperty("os.name");
+                output = "Le système d'exploitation est : " + os;
+            } else if (command.equals("printenv")) {
+                System.out.print("Veuillez entrer le nom de la variable d'environnement : ");
+                String varInput = scanner.nextLine();
 
+                Map<String, String> varEnv = System.getenv();
+
+                if (varEnv.containsKey(varInput)) {
+                    String value = varEnv.get(varInput);
+                    output = "La valeur de la variable d'environnement " + varInput + " est : " + value;
+                } else {
+                    output = "La variable d'environnement " + varInput + " n'a pas été trouvée.";
+                }
+            } else if (command.equals("echo")) {
+                System.out.print("Veuillez entrer votre texte : ");
+                String repeat = scanner.nextLine();
+                output = repeat;
+            } else {
+                output = "Commande '" + command + "' non trouvée.";
+            }
+
+            System.out.println(output);
+            System.out.print("> "); // Invite
+        }
+
+        scanner.close();
+        System.out.println("Au revoir !");
+    }
 }
