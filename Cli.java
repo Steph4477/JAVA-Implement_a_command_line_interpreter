@@ -8,11 +8,9 @@ public class Cli {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("> "); // Invite
-
         while (true) {
             String command = scanner.nextLine(); // Obtenir l'entrée de la console sous forme de chaîne
             String output = ""; // Variable pour stocker la sortie
-
             if (command.equals("exit")) {
                 break; // Quitter la boucle si la commande est "exit"
             } else if (command.equals("date")) {
@@ -33,9 +31,7 @@ public class Cli {
             } else if (command.equals("printenv")) {
                 System.out.print("Veuillez entrer le nom de la variable d'environnement : ");
                 String varInput = scanner.nextLine();
-
                 Map<String, String> varEnv = System.getenv();
-
                 if (varEnv.containsKey(varInput)) {
                     String value = varEnv.get(varInput);
                     output = "La valeur de la variable d'environnement " + varInput + " est : " + value;
@@ -49,7 +45,6 @@ public class Cli {
             } else {
                 output = "Commande '" + command + "' non trouvée.";
             }
-
             System.out.println(output);
             System.out.print("> "); // Invite
         }
