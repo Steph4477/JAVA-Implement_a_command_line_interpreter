@@ -1,4 +1,4 @@
-import java.util.Map;
+
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,20 +24,15 @@ public class Cli {
                 output = now.toString();
             } else if (command.equals("userhome")) {
                 String userhome = System.getProperty("user.home");
-                output = "Le répertoire de l'utilisateur est : " + userhome;
+                output = userhome;
             } else if (command.equals("os")) {
-                String os = System.getProperty("os.name");
-                output = "Le système d'exploitation est : " + os;
-            } else if (command.equals("printenv")) {
-                System.out.print("Veuillez entrer le nom de la variable d'environnement : ");
+                String os = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")";
+                output = os;
+            }
+            else if (command.equals("printenv")) {
                 String varInput = scanner.nextLine();
-                Map<String, String> varEnv = System.getenv();
-                if (varEnv.containsKey(varInput)) {
-                    String value = varEnv.get(varInput);
-                    output = "La valeur de la variable d'environnement " + varInput + " est : " + value;
-                } else {
-                    output = "La variable d'environnement " + varInput + " n'a pas été trouvée.";
-                }
+                String value = System.getenv(varInput);
+                output = (value != null) ? value : "";  // Si la variable n'existe pas, imprime une chaîne vide
             } else if (command.equals("echo")) {
                 System.out.print("Veuillez entrer votre texte : ");
                 String repeat = scanner.nextLine();
@@ -50,6 +45,9 @@ public class Cli {
         }
 
         scanner.close();
-        System.out.println("Au revoir !");
+        System.out.println("Bye !");
     }
 }
+
+            
+ 
