@@ -22,7 +22,10 @@ public class Cli {
             } else if (command.equals("datetime")) {
                 LocalDateTime now = LocalDateTime.now();
                 output = now.toString();
-            } else if (command.equals("userhome")) {
+            } else if(command.equals("useraccount")) {
+                String username = System.getProperty("user.name");
+                output = username;      
+            } else if(command.equals("userhome")) {
                 String userhome = System.getProperty("user.home");
                 output = userhome;
             } else if (command.equals("os")) {
@@ -47,15 +50,10 @@ public class Cli {
             } else {
                 output = "Commande '" + command + "' non trouvée.";
             }
-    
             System.out.println(output);
             System.out.print("> "); // Invite
         }
-
         scanner.close();
         System.out.println("Bye !");
     }
-}
-
-            
- 
+} 
