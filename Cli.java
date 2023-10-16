@@ -29,17 +29,25 @@ public class Cli {
                 String os = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")";
                 output = os;
             }
-            else if (command.equals("printenv")) {
-                String varInput = scanner.nextLine();
-                String value = System.getenv(varInput);
-                output = (value != null) ? value : "";  // Si la variable n'existe pas, imprime une chaîne vide
-            } else if (command.equals("echo")) {
-                System.out.print("Veuillez entrer votre texte : ");
-                String repeat = scanner.nextLine();
-                output = repeat;
+            else if (command.startsWith("printenv")) {
+                if (command.length() > "printenv ".length()) {
+                    String varInput = command.substring("printenv ".length());
+                    String value = System.getenv(varInput);
+                    output = (value != null) ? value : "";
+                } else {
+                    output = "";
+                }
+            } else if (command.startsWith("echo")) {
+                if (command.length() > "echo ".length()) {
+                    String[] arguments = command.substring("echo ".length()).split(" ");
+                    output = String.join(" ", arguments);
+                } else {
+                    output = "";
+                }
             } else {
                 output = "Commande '" + command + "' non trouvée.";
             }
+    
             System.out.println(output);
             System.out.print("> "); // Invite
         }
