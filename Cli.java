@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,9 +9,10 @@ public class Cli {
         Scanner scanner = new Scanner(System.in);
         System.out.print("> "); // Invite
         while (true) {
-            String command = scanner.nextLine(); // Obtenir l'entrée de la console sous forme de chaîne
-            String[] commandArgs = command.split(" ", 2);
+            String command = scanner.nextLine();
+            String[] commandArgs = command.split(" ", 2); // split le tableau en 2 après l'espace
             String output = ""; // Variable pour stocker la sortie
+            String lineSeparator = System.getProperty("line.separator");
             if (command.equals("exit") || command.equals("logout")) {
                 break; // Quitter la boucle si la commande est "exit"
             } else if (command.equals("date")) {
@@ -31,30 +33,25 @@ public class Cli {
             } else if (command.equals("os")) {
                 String os = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")";
                 output = os;
-            }  else if (commandArgs.length > 1) {
-                String arg = System.getenv(commandArgs[1]);
-                if (arg == null) {
-                    output = "";
+            } else if (command.equals("printenv")) {
+                if (commandArgs.length > 1) {
+                    String arg = commandArgs[1];
+                    String value = System.getenv(arg);
+                    output = (value != null) ? value : "";
                 } else {
-                    output = arg;
+                    Map<String, String> env = System.getenv();
+                    for (Map.Entry<String, String> entry : env.entrySet()) {
+                        output += entry.getKey() + "=" + entry.getValue() + lineSeparator;
+                    }
                 }
-               
-
-            }
-                else if (commandArgs[0].equals("printenv")) {
-                // return all environment variables and replace ", " by "\n"
-                String envProperties = System.getenv().toString().replace(", ", "\n");
-                System.out.println(envProperties);
-            
-
-           
-            } else if (command.startsWith("echo") || command.startsWith("print")) {
-                if (command.length() > "echo ".length()) {
-                    String[] arguments = command.substring("echo ".length()).split(" ");
-                    output = String.join(" ", arguments);
-                } else {
-                    output = "";
-                }
+            } else if (commandArgs.length > 0 && commandArgs[0].equals("echo")) {
+                output = (commandArgs.length > 1) ? command.substring("echo ".length()) : "";
+            } else if (commandArgs.length > 0 && commandArgs[0].equals("print")) {
+                output = (commandArgs.length > 1) ? command.substring("print ".length()) : "";
+            } else if (command.length() > "printenv ".length()) {
+                String varInput = command.substring("printenv ".length());
+                String value = System.getenv(varInput);
+                output = (value != null) ? value : "";
             } else {
                 output = "Command '" + command + "' not found.";
             }
