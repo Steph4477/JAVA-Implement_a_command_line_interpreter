@@ -44,10 +44,9 @@ public class Cli {
                         output += entry.getKey() + "=" + entry.getValue() + lineSeparator;
                     }
                 }
-            } else if (commandTable[0].equals("echo")) {
+            } else if ((commandTable[0].equals("echo")) || (commandTable[0].equals("print"))) {
                 output = (commandTable.length > 1) ? commandTable[1] : "";
-            } else if (commandTable[0].equals("print")) {
-                output = (commandTable.length > 1) ? commandTable[1] : "";
+           
             } else if (command.length() > "printenv ".length()) {
                 String varInput = command.substring("printenv ".length());
                 String value = System.getenv(varInput);
