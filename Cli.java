@@ -35,7 +35,7 @@ public class Cli {
             } else if (command.equals("printenv")) {
                 if (!arguments.isEmpty()) {
                     String value = System.getenv(arguments);
-                    output = (value != null) ? value : "";
+                    output = value;
                 } else {
                     Map<String, String> env = System.getenv();
                     for (Map.Entry<String, String> entry : env.entrySet()) {
