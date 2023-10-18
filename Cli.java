@@ -10,7 +10,7 @@ public class Cli {
         System.out.print("> "); // Invite
         while (true) {
             String command = scanner.nextLine();
-            String[] commandArgs = command.split(" ", 2); // split le tableau en 2 après l'espace
+            String[] commandTable = command.split(" ", 2); // split le tableau en 2 après l'espace
             String output = ""; // Variable pour stocker la sortie
             String lineSeparator = System.getProperty("line.separator");
             if (command.equals("exit") || command.equals("logout")) {
@@ -34,8 +34,8 @@ public class Cli {
                 String os = System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")";
                 output = os;
             } else if (command.equals("printenv")) {
-                if (commandArgs.length > 1) {
-                    String arg = commandArgs[1];
+                if (commandTable.length > 1) {
+                    String arg = commandTable[1];
                     String value = System.getenv(arg);
                     output = (value != null) ? value : "";
                 } else {
@@ -44,10 +44,10 @@ public class Cli {
                         output += entry.getKey() + "=" + entry.getValue() + lineSeparator;
                     }
                 }
-            } else if (commandArgs.length > 0 && commandArgs[0].equals("echo")) {
-                output = (commandArgs.length > 1) ? command.substring("echo ".length()) : "";
-            } else if (commandArgs.length > 0 && commandArgs[0].equals("print")) {
-                output = (commandArgs.length > 1) ? command.substring("print ".length()) : "";
+            } else if (commandTable[0].equals("echo")) {
+                output = (commandTable.length > 1) ? commandTable[1] : "";
+            } else if (commandTable[0].equals("print")) {
+                output = (commandTable.length > 1) ? commandTable[1] : "";
             } else if (command.length() > "printenv ".length()) {
                 String varInput = command.substring("printenv ".length());
                 String value = System.getenv(varInput);
