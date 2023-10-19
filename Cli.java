@@ -42,7 +42,7 @@ public class Cli {
             } else if (commandName.equals("printenv")) {
                 if (!arguments.isEmpty()) {
                     String value = System.getenv(arguments);
-                    output = (value != null) ? value : "command not found";
+                    output = (value != null) ? value : "";
                 } else {
                     StringBuilder buildPrintenv = new StringBuilder();
                     Map<String, String> env = System.getenv();
