@@ -1,0 +1,14 @@
+date
+time
+datetime
+useraccount
+userhome
+os
+printenv <variable_name>
+echo <message>
+ls <directory_path>
+cat <file_path>
+greet <username>
+help
+exit
+test

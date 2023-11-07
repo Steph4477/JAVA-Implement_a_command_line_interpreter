@@ -101,4 +101,30 @@ class Commands {
             return "Please specify a path to a text file to read";
         }
     }
+
+    public static String greet(CommandLine commandLine) {
+        if (commandLine.hasArgument()) {
+            String username = commandLine.getArgument();
+            return "Hello, " + username + "! Welcome to our CLI.";
+        } else {
+            return "Please give me your username after the 'greet' command :).";
+        }
+    }
+
+    public static String help() {
+        String filePath = "help.txt"; // Chemin vers le fichier de commandes
+        StringBuilder result = new StringBuilder("List commands:").append(System.lineSeparator());
+        int lineNumber = 1;
+        try {
+            for (String line : Files.readAllLines(Paths.get(filePath))) {
+                result.append(lineNumber++)
+                        .append(". ")
+                        .append(line)
+                        .append(System.lineSeparator());
+            }
+            return result.toString();
+        } catch (Exception e) {
+            return "Error reading the command list file.";
+        }
+    }
 }
