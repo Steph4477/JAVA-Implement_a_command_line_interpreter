@@ -7,36 +7,39 @@ public class Cli {
         while (true) {
             String scanLine = scanner.nextLine();
             CommandLine commandLine = new CommandLine(scanLine);
+            String commandName = commandLine.getCommandName(); // Stocke le nom de la commande
+
             String output = "";
-          
-            if (commandLine.getCommandName().equals("exit") || commandLine.getCommandName().equals("logout")) {
+
+            if (commandName.equals("exit") || commandName.equals("logout")) {
                 break;
-            } else if (commandLine.getCommandName().equals("date")) {
+            } else if (commandName.equals("date")) {
                 output = Commands.date();
-            }  else if (commandLine.getCommandName().equals("time")) {
+            } else if (commandName.equals("time")) {
                 output = Commands.time();
-            } else if (commandLine.getCommandName().equals("datetime")) {
+            } else if (commandName.equals("datetime")) {
                 output = Commands.datetime();
-            } else if (commandLine.getCommandName().equals("useraccount")) {
+            } else if (commandName.equals("useraccount")) {
                 output = Commands.useraccount();
-            } else if (commandLine.getCommandName().equals("userhome")) {
+            } else if (commandName.equals("userhome")) {
                 output = Commands.userhome();
-            } else if (commandLine.getCommandName().equals("os")) {
-                output = Commands.os(); 
-            } else if (commandLine.getCommandName().equals("printenv")) {
+            } else if (commandName.equals("os")) {
+                output = Commands.os();
+            } else if (commandName.equals("printenv")) {
                 output = Commands.printenv(commandLine);
-            } else if (commandLine.getCommandName().equals("echo") || commandLine.getCommandName().equals("print")) {
-                output = Commands.echo(commandLine); 
-            } else if (commandLine.getCommandName().equals("ls")) {
-                output = Commands.ls(commandLine);            
+            } else if (commandName.equals("echo") || commandName.equals("print")) {
+                output = Commands.echo(commandLine);
+            } else if (commandName.equals("ls")) {
+                output = Commands.ls(commandLine);
+            } else if (commandName.equals("cat")) {
+                output = Commands.cat(commandLine);
             } else {
-                output = "Command '" + commandLine.getCommandName() + "' not found.";
-            }        
+                output = "Command '" + commandName + "' not found.";
+            }
             System.out.println(output);
-            System.out.print("> "); 
+            System.out.print("> ");
         }
         scanner.close();
         System.out.println("Bye!");
     }
 }
-

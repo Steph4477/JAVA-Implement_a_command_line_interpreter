@@ -1,4 +1,6 @@
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -74,9 +76,29 @@ class Commands {
                     return "Directory is empty";
                 }
             }
-
         }
         // Retour par défaut si l'argument est nul ou vide
         return "Not a directory";
+    }
+
+    public static String cat(CommandLine commandLine) {
+        if (commandLine.hasArgument()) {
+            String filePath = commandLine.getArgument();
+            StringBuilder buildCat = new StringBuilder();
+            int lineNumber = 1;
+            try {
+                for (String line : Files.readAllLines(Paths.get(filePath))) {
+                    buildCat.append(lineNumber++)
+                            .append(". ")
+                            .append(line)
+                            .append(System.lineSeparator());
+                }
+            } catch (Exception e) {
+                return "Error reading file";
+            }
+            return buildCat.toString();
+        } else {
+            return "Please specify a path to a text file to read";
+        }
     }
 }
