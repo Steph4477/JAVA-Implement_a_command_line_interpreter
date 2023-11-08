@@ -81,27 +81,6 @@ class Commands {
         return "Not a directory";
     }
 
-    public static String cat(CommandLine commandLine) {
-        if (commandLine.hasArgument()) {
-            String filePath = commandLine.getArgument();
-            StringBuilder buildCat = new StringBuilder();
-            int lineNumber = 1;
-            try {
-                for (String line : Files.readAllLines(Paths.get(filePath))) {
-                    buildCat.append(lineNumber++)
-                            .append(". ")
-                            .append(line)
-                            .append(System.lineSeparator());
-                }
-            } catch (Exception e) {
-                return "Error reading file";
-            }
-            return buildCat.toString();
-        } else {
-            return "Please specify a path to a text file to read";
-        }
-    }
-
     public static String greet(CommandLine commandLine) {
         if (commandLine.hasArgument()) {
             String username = commandLine.getArgument();
@@ -109,15 +88,11 @@ class Commands {
         } else {
             return "Please give me your username after the 'greet' command :) ";
         }
-    }
-
-    public static String help() {
-        String filePath = "help.txt"; // Chemin vers le fichier de commandes
-        StringBuilder result = new StringBuilder("List commands:").append(System.lineSeparator());
+    }  
+    
+    private static String readFile(String filePath) {
+        StringBuilder result = new StringBuilder();
         int lineNumber = 1;
-        if (Files.notExists(Paths.get(filePath))) {
-            return "Command list file '" + filePath + "' not found.";
-        }
         try {
             for (String line : Files.readAllLines(Paths.get(filePath))) {
                 result.append(lineNumber++)
@@ -127,7 +102,26 @@ class Commands {
             }
             return result.toString();
         } catch (Exception e) {
-            return "Error reading the command list file.";
+            return "Error reading file";
         }
     }
+
+    public static String cat(CommandLine commandLine) {
+        if (commandLine.hasArgument()) {
+            String filePath = commandLine.getArgument();
+            return readFile(filePath);
+        } else {
+            return "Please specify a path to a text file to read";
+        }
+    }
+
+    public static String help() {
+        String filePath = "help.txt"; // Chemin vers le fichier de commandes
+        if (Files.notExists(Paths.get(filePath))) {
+            return "Command list file '" + filePath + "' not found.";
+        }
+        return readFile(filePath);
+    }
 }
+
+
