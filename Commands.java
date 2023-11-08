@@ -107,7 +107,7 @@ class Commands {
             String username = commandLine.getArgument();
             return "Hello, " + username + "! Welcome to our CLI.";
         } else {
-            return "Please give me your username after the 'greet' command :).";
+            return "Please give me your username after the 'greet' command :) ";
         }
     }
 
@@ -115,6 +115,9 @@ class Commands {
         String filePath = "help.txt"; // Chemin vers le fichier de commandes
         StringBuilder result = new StringBuilder("List commands:").append(System.lineSeparator());
         int lineNumber = 1;
+        if (Files.notExists(Paths.get(filePath))) {
+            return "Command list file '" + filePath + "' not found.";
+        }
         try {
             for (String line : Files.readAllLines(Paths.get(filePath))) {
                 result.append(lineNumber++)
